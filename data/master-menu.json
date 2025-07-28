@@ -1,0 +1,160 @@
+{
+  "mainCourses": [
+    {
+      "id": "mc1",
+      "name": "Paneer Butter Masala",
+      "calories": 450,
+      "tasteProfile": "spicy",
+      "popularityScore": 90,
+      "remarks": "Rich and creamy paneer in aromatic tomato-based gravy"
+    },
+    {
+      "id": "mc2",
+      "name": "Chicken Biryani",
+      "calories": 600,
+      "tasteProfile": "spicy",
+      "popularityScore": 95,
+      "remarks": "Fragrant basmati rice cooked with tender chicken and aromatic spices"
+    },
+    {
+      "id": "mc3",
+      "name": "Vegetable Pulao",
+      "calories": 400,
+      "tasteProfile": "savory",
+      "popularityScore": 70,
+      "remarks": "Flavorful rice dish with mixed vegetables and mild spices"
+    },
+    {
+      "id": "mc4",
+      "name": "Rajma Chawal",
+      "calories": 500,
+      "tasteProfile": "savory",
+      "popularityScore": 80,
+      "remarks": "Kidney beans curry served with steamed rice"
+    },
+    {
+      "id": "mc5",
+      "name": "Chole Bhature",
+      "calories": 650,
+      "tasteProfile": "spicy",
+      "popularityScore": 85,
+      "remarks": "Spicy chickpea curry with deep-fried bread"
+    },
+    {
+      "id": "mc6",
+      "name": "Masala Dosa",
+      "calories": 480,
+      "tasteProfile": "savory",
+      "popularityScore": 88,
+      "remarks": "Crispy rice crepe filled with spiced potato mixture"
+    },
+    {
+      "id": "mc7",
+      "name": "Grilled Sandwich",
+      "calories": 370,
+      "tasteProfile": "savory",
+      "popularityScore": 60,
+      "remarks": "Toasted sandwich with vegetables and cheese"
+    }
+  ],
+  "sideDishes": [
+    {
+      "id": "sd1",
+      "name": "Garlic Naan",
+      "calories": 200,
+      "tasteProfile": "savory",
+      "popularityScore": 90,
+      "remarks": "Soft bread brushed with garlic butter and herbs"
+    },
+    {
+      "id": "sd2",
+      "name": "Mixed Veg Salad",
+      "calories": 150,
+      "tasteProfile": "sweet",
+      "popularityScore": 75,
+      "remarks": "Fresh vegetables with light dressing"
+    },
+    {
+      "id": "sd3",
+      "name": "French Fries",
+      "calories": 350,
+      "tasteProfile": "savory",
+      "popularityScore": 80,
+      "remarks": "Crispy golden potato fries"
+    },
+    {
+      "id": "sd4",
+      "name": "Curd Rice",
+      "calories": 250,
+      "tasteProfile": "savory",
+      "popularityScore": 70,
+      "remarks": "Cooling rice mixed with yogurt and mild spices"
+    },
+    {
+      "id": "sd5",
+      "name": "Papad",
+      "calories": 100,
+      "tasteProfile": "savory",
+      "popularityScore": 65,
+      "remarks": "Crispy lentil wafer, perfect accompaniment"
+    },
+    {
+      "id": "sd6",
+      "name": "Paneer Tikka",
+      "calories": 300,
+      "tasteProfile": "spicy",
+      "popularityScore": 85,
+      "remarks": "Marinated paneer cubes grilled to perfection"
+    }
+  ],
+  "drinks": [
+    {
+      "id": "dr1",
+      "name": "Masala Chaas",
+      "calories": 100,
+      "tasteProfile": "spicy",
+      "popularityScore": 80,
+      "remarks": "Spiced buttermilk with cumin and mint"
+    },
+    {
+      "id": "dr2",
+      "name": "Sweet Lassi",
+      "calories": 220,
+      "tasteProfile": "sweet",
+      "popularityScore": 90,
+      "remarks": "Sweet yogurt-based drink with cardamom"
+    },
+    {
+      "id": "dr3",
+      "name": "Lemon Soda",
+      "calories": 90,
+      "tasteProfile": "savory",
+      "popularityScore": 70,
+      "remarks": "Refreshing lemon soda with salt and spices"
+    },
+    {
+      "id": "dr4",
+      "name": "Cold Coffee",
+      "calories": 180,
+      "tasteProfile": "sweet",
+      "popularityScore": 75,
+      "remarks": "Iced coffee with milk and sugar"
+    },
+    {
+      "id": "dr5",
+      "name": "Coconut Water",
+      "calories": 60,
+      "tasteProfile": "sweet",
+      "popularityScore": 60,
+      "remarks": "Natural coconut water, refreshing and healthy"
+    },
+    {
+      "id": "dr6",
+      "name": "Iced Tea",
+      "calories": 120,
+      "tasteProfile": "sweet",
+      "popularityScore": 78,
+      "remarks": "Cool iced tea with lemon and mint"
+    }
+  ]
+} 

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Recommendations</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 40px;
+            border: 1px solid #e9ecef;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .input-group label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .input-group select {
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+            background: white;
+            color: #1a1a1a;
+            cursor: pointer;
+            min-width: 160px;
+            font-family: inherit;
+        }
+
+        .input-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .generate-btn {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.2s;
+        }
+
+        .generate-btn:hover {
+            background: #333;
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e9ecef;
+            border-top: 2px solid #1a1a1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+        }
+
+        .day-section {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .day-header {
+            background: #f8f9fa;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .taste-profile {
+            background: #1a1a1a;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .combos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .combo-card {
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            background: white;
+        }
+
+        .combo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .combo-id {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 14px;
+        }
+
+        .combo-profile {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .combo-items {
+            margin-bottom: 16px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f9fafb;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 500;
+            color: #1a1a1a;
+            font-size: 14px;
+        }
+
+        .item-details {
+            text-align: right;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .item-calories {
+            font-weight: 600;
+            color: #059669;
+            font-size: 13px;
+        }
+
+        .combo-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-top: 1px solid #f3f4f6;
+            margin-top: 12px;
+        }
+
+        .total-calories {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .popularity-score {
+            background: #059669;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .combo-remarks {
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #666;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .error, .success, .warning {
+            padding: 16px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .success {
+            background: #f0fdf4;
+            color: #059669;
+            border: 1px solid #bbf7d0;
+        }
+
+        .warning {
+            background: #fffbeb;
+            color: #d97706;
+            border: 1px solid #fed7aa;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .header {
+                margin-bottom: 40px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+            
+            .input-group select,
+            .generate-btn {
+                width: 100%;
+            }
+            
+            .combos-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+                gap: 16px;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            
+            .combo-stats {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Menu Recommendations</h1>
+            <p>Generate daily combo meals for your restaurant</p>
+        </div>
+
+        <div id="access-warning" class="warning" style="display: none;">
+            <strong>Note:</strong> For best experience, access at 
+            <a href="http://localhost:3000">http://localhost:3000</a>
+        </div>
+
+
+
+        <div class="input-section">
+            <div class="input-group">
+                <label for="currentDay">Current Day:</label>
+                <select id="currentDay">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
+                <button class="generate-btn" onclick="generateRecommendations()">
+                    Generate
+                </button>
+            </div>
+        </div>
+
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Generating recommendations...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="success" class="success" style="display: none;"></div>
+
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        // Set current day as default
+        const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+        document.getElementById('currentDay').value = today;
+
+        // Show warning if accessed via file protocol
+        if (window.location.protocol === 'file:') {
+            document.getElementById('access-warning').style.display = 'block';
+        }
+
+        async function generateRecommendations() {
+            const currentDay = document.getElementById('currentDay').value;
+            const generateBtn = document.querySelector('.generate-btn');
+            const loading = document.querySelector('.loading');
+            const results = document.getElementById('results');
+            const error = document.getElementById('error');
+            const success = document.getElementById('success');
+
+            const apiUrl = window.location.protocol === 'file:' 
+                ? 'http://localhost:3000/api/recommendations'
+                : '/api/recommendations';
+
+            // Reset UI
+            error.style.display = 'none';
+            success.style.display = 'none';
+            results.style.display = 'none';
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating...';
+            loading.style.display = 'block';
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ currentDay })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to generate recommendations');
+                }
+
+                displayResults(data);
+                success.textContent = `Generated recommendations for ${currentDay}`;
+                success.style.display = 'block';
+
+            } catch (err) {
+                error.textContent = err.message;
+                error.style.display = 'block';
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate';
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayResults(data) {
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+
+            data.recommendations.forEach(dayData => {
+                const daySection = document.createElement('div');
+                daySection.className = 'day-section';
+
+                daySection.innerHTML = `
+                    <div class="day-header">
+                        <h2>${dayData.day}</h2>
+                        <div class="taste-profile">${dayData.tasteProfile}</div>
+                    </div>
+                    <div class="combos-grid">
+                        ${dayData.combos.map(combo => `
+                            <div class="combo-card">
+                                <div class="combo-header">
+                                    <span class="combo-id">${combo.comboId}</span>
+                                    <span class="combo-profile">${combo.comboTasteProfile}</span>
+                                </div>
+                                <div class="combo-items">
+                                    <div class="item">
+                                        <span class="item-name">${combo.mainCourse.name}</span>
+                                        <div class="item-details">
+                                            <div class="item-calories">${combo.mainCourse.calories} cal</div>
+                                            <div>${combo.mainCourse.tasteProfile}</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <span class="item-name">${combo.sideDish.name}</span>
+                                        <div class="item-details">
+                                            <div class="item-calories">${combo.sideDish.calories} cal</div>
+                                            <div>${combo.sideDish.tasteProfile}</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <span class="item-name">${combo.drink.name}</span>
+                                        <div class="item-details">
+                                            <div class="item-calories">${combo.drink.calories} cal</div>
+                                            <div>${combo.drink.tasteProfile}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-stats">
+                                    <div class="total-calories">Total: ${combo.totalCalories} cal</div>
+                                    <div class="popularity-score">${combo.totalPopularityScore}</div>
+                                </div>
+                                <div class="combo-remarks">${combo.comboRemarks}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                results.appendChild(daySection);
+            });
+
+            results.style.display = 'block';
+        }
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                generateRecommendations();
+            }
+        });
+    </script>
+</body>
+</html>
