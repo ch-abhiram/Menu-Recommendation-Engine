@@ -255,10 +255,6 @@ Feel free to enhance the application by:
 - Adding new taste profiles
 - Optimizing the algorithms
 
-## 📝 License
 
-This project is open source and available under the MIT License.
-
----
 
 **Enjoy creating delicious menu combinations! 🍽️** 
